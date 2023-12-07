@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package template.version;
+
+service VersionService {
+  rpc GetVersion (VersionRequest) returns (VersionResponse) {}
+}
+
+message VersionRequest {
+}
+
+message VersionResponse {
+  string label = 1;
+  int32 major = 2;
+  int32 minor = 3;
+  int32 patch = 4;
+}

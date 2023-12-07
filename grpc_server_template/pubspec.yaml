@@ -1,0 +1,20 @@
+name: grpc_server
+description: A starting point for Dart libraries or applications.
+version: 0.0.1
+# homepage: https://www.example.com
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dev_dependencies:
+  lints: any
+  test: ^1.16.0
+
+dependencies: 
+  build_runner: ^2.1.5
+  build_version: ^2.1.0
+  corsac_jwt: ^1.0.0-nullsafety.1
+  dbcrypt: ^2.0.0
+  grpc: ^3.0.2
+  nanoid: ^1.0.0
+  postgres: ^2.4.3
