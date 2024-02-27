@@ -1,14 +1,16 @@
 import 'package:grpc/grpc.dart';
+import 'package:grpc_flutter_template/src/data/generated/version/version.pbgrpc.dart';
 import 'package:grpc_flutter_template/src/data/persistence/persistence.dart';
 import 'package:grpc_flutter_template/src/data/version.dart';
+import 'package:mocktail/mocktail.dart';
 
-class InstanceInternalRepository {
+class InstanceSessionRepository {
   final ClientChannel channel;
   final PersistenceService persistenceService;
   String? userToken;
   int? userId;
 
-  InstanceInternalRepository({
+  InstanceSessionRepository({
     required this.channel,
     required this.persistenceService,
   });
@@ -19,22 +21,23 @@ class InstanceInternalRepository {
 }
 
 class Instance {
-  final InstanceInternalRepository _session;
+  final InstanceSessionRepository _session;
   Instance({
     String host = 'localhost',
     int port = 50051,
     PersistenceService? persistenceService,
-  }) : _session = InstanceInternalRepository(
-            persistenceService: persistenceService ?? NoPersistenceService(),
-            channel: ClientChannel(
-              host,
-              port: port,
-              options: ChannelOptions(
-                credentials: const ChannelCredentials.insecure(),
-                codecRegistry:
-                    CodecRegistry(codecs: const [GzipCodec(), IdentityCodec()]),
-              ),
-            ));
+  }) : _session = InstanceSessionRepository(
+          persistenceService: persistenceService ?? NoPersistenceService(),
+          channel: ClientChannel(
+            host,
+            port: port,
+            options: ChannelOptions(
+              credentials: const ChannelCredentials.insecure(),
+              codecRegistry:
+                  CodecRegistry(codecs: const [GzipCodec(), IdentityCodec()]),
+            ),
+          ),
+        );
 
   Future<void> init() async {
     _session.userToken = await _session.persistenceService.getToken();
@@ -42,5 +45,18 @@ class Instance {
 
   Future<void> shutdown() => _session.channel.shutdown();
 
-  VersionClient get version => VersionClient(_session);
+  VersionClient get version => VersionClient(
+        VersionServiceClient(_session.channel),
+      );
+}
+
+class FakeInstance extends Fake implements Instance {
+  @override
+  VersionClient get version => VersionClient(FakeVersionServiceClient());
+
+  @override
+  Future<void> init() async {}
+
+  @override
+  Future<void> shutdown() async {}
 }

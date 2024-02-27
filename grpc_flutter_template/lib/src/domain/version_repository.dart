@@ -13,7 +13,7 @@ class VersionRepository {
   Future<void> init() async {}
 
   Future<void> getVersion() async {
-    var resp = await _versionClient.getVersion();
+    final resp = await _versionClient.getVersion();
     _controller.add(resp);
   }
 

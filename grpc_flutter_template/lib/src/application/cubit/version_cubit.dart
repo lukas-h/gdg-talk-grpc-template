@@ -47,4 +47,10 @@ class VersionCubit extends Cubit<VersionState> {
     emit(VersionLoading());
     await _versionRepository.getVersion();
   }
+
+  @override
+  Future<void> close() {
+    // TODO: implement close
+    return super.close();
+  }
 }
