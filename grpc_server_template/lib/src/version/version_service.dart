@@ -5,8 +5,8 @@ import 'package:grpc_server/src/version/version.g.dart';
 class VersionService extends VersionServiceBase {
   @override
   Future<VersionResponse> getVersion(ServiceCall call, VersionRequest request) {
-    var parts = packageVersion.split('.');
-    // TODO error handling & logging
+    final parts = packageVersion.split('.');
+
     return Future.value(
       VersionResponse(
         label: packageVersion,

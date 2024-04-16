@@ -33,8 +33,12 @@ class Instance {
             port: port,
             options: ChannelOptions(
               credentials: const ChannelCredentials.insecure(),
-              codecRegistry:
-                  CodecRegistry(codecs: const [GzipCodec(), IdentityCodec()]),
+              codecRegistry: CodecRegistry(
+                codecs: const [
+                  GzipCodec(),
+                  IdentityCodec(),
+                ],
+              ),
             ),
           ),
         );
