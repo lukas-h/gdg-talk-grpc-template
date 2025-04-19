@@ -3,6 +3,7 @@ syntax = "proto3";
 package template.version;
 
 service VersionService {
+  // remote procedure call
   rpc GetVersion (VersionRequest) returns (VersionResponse) {}
 }
 
@@ -14,4 +15,15 @@ message VersionResponse {
   int32 major = 2;
   int32 minor = 3;
   int32 patch = 4;
+}
+
+service HelloWorldService {
+  rpc GetHelloWorld (HelloWorldRequest) returns (HelloWorldResponse) {}
+}
+
+message HelloWorldRequest {
+}
+
+message HelloWorldResponse {
+  string message = 1;
 }
