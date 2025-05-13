@@ -24,7 +24,7 @@ class Instance {
   final InstanceSessionRepository _session;
   Instance({
     String host = 'localhost',
-    int port = 50051,
+    int port = 9876,
     PersistenceService? persistenceService,
   }) : _session = InstanceSessionRepository(
           persistenceService: persistenceService ?? NoPersistenceService(),
